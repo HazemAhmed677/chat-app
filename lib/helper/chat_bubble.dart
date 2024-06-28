@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scholar_chat_app/constants.dart';
 
-class ChatBubble extends StatelessWidget {
-  const ChatBubble({required this.text, super.key});
+class ChatBubbleOfSender extends StatelessWidget {
+  const ChatBubbleOfSender({required this.text, super.key});
 
   final String text;
   @override
@@ -33,8 +33,8 @@ class ChatBubble extends StatelessWidget {
   }
 }
 
-class ChatBubbleFromFriend extends StatelessWidget {
-  const ChatBubbleFromFriend({required this.text, super.key});
+class ChatBubbleFromOthers extends StatelessWidget {
+  const ChatBubbleFromOthers({required this.text, super.key});
 
   final String text;
   @override
@@ -51,7 +51,7 @@ class ChatBubbleFromFriend extends StatelessWidget {
             topRight: Radius.circular(35),
             bottomLeft: Radius.circular(35),
           ),
-          color: Color(0xff0B788F),
+          color: Color.fromARGB(255, 52, 96, 137),
         ),
         child: Text(
           text,

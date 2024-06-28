@@ -29,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return ModalProgressHUD(
       inAsyncCall: isLoading,
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 0, 27, 52),
+        backgroundColor: kPrimaryColor,
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: Form(

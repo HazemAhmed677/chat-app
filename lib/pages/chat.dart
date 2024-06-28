@@ -4,10 +4,15 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_chat_app/constants.dart';
 import 'package:scholar_chat_app/helper/chat_bubble.dart';
 
-class ChatPage extends StatelessWidget {
-  ChatPage({super.key});
+class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
   static String id = 'Chatting';
 
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
   bool isLoading = true;
 
   CollectionReference messeges =
@@ -20,12 +25,14 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String email = ModalRoute.of(context)!.settings.arguments as String;
+    String input = '';
     return StreamBuilder<QuerySnapshot>(
         stream: messeges.orderBy(kCreatedAt, descending: true).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
               appBar: AppBar(
+                elevation: 10,
                 backgroundColor: kPrimaryColor,
                 toolbarHeight: 70,
                 automaticallyImplyLeading: false,
@@ -37,11 +44,14 @@ class ChatPage extends StatelessWidget {
                       kLogo,
                       height: 60,
                     ),
-                    const Text(
-                      'Chat',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
+                    const Padding(
+                      padding: EdgeInsets.only(left: 5.0),
+                      child: Text(
+                        'Chat',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
                       ),
                     )
                   ],
@@ -56,10 +66,10 @@ class ChatPage extends StatelessWidget {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) =>
                           (email == snapshot.data!.docs[index]['id'])
-                              ? ChatBubble(
+                              ? ChatBubbleOfSender(
                                   text: snapshot.data!.docs[index][kMessage],
                                 )
-                              : ChatBubbleFromFriend(
+                              : ChatBubbleFromOthers(
                                   text: snapshot.data!.docs[index][kMessage]),
                     ),
                   ),
@@ -67,28 +77,24 @@ class ChatPage extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     child: TextField(
                       controller: controller,
+                      onChanged: (value) {
+                        input = value;
+                      },
                       onSubmitted: (data) {
-                        if (data != '') {
-                          messeges.add(
-                            {
-                              'id': email,
-                              kMessage: data,
-                              kCreatedAt: DateTime.now(),
-                            },
-                          );
-                          controller.clear();
-                          _controller.animateTo(0,
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeIn);
-                        }
+                        addToCollectionAndAnimate(data, email);
                       },
                       decoration: InputDecoration(
                         label: const Text('Messege'),
                         hintText: 'Enter Messege',
-                        suffixIcon: const Icon(
-                          Icons.send,
-                          color: kPrimaryColor,
-                        ),
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              addToCollectionAndAnimate(input, email);
+                              input = '';
+                            },
+                            icon: const Icon(
+                              Icons.send,
+                              color: Color.fromARGB(255, 20, 79, 127),
+                            )),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: const BorderSide(
@@ -111,5 +117,23 @@ class ChatPage extends StatelessWidget {
             );
           }
         });
+  }
+
+  void addToCollectionAndAnimate(String data, String email) {
+    if (data != '') {
+      messeges.add(
+        {
+          'id': email,
+          kMessage: data,
+          kCreatedAt: DateTime.now(),
+        },
+      );
+      controller.clear();
+      _controller.animateTo(_controller.position.minScrollExtent,
+          duration: const Duration(
+            milliseconds: 300,
+          ),
+          curve: Curves.easeIn);
+    }
   }
 }
