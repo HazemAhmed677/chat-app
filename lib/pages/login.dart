@@ -73,7 +73,7 @@ class _RegisterPageState extends State<LoginPage> {
                     ],
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 10,
                   ),
                   CustomTextFormField(
                     onChanged: (data) {
@@ -90,7 +90,7 @@ class _RegisterPageState extends State<LoginPage> {
                     hint: 'Email',
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 10,
                   ),
                   CustomTextFormField(
                     onChanged: (data) {
