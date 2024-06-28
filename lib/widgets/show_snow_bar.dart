@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void showSnackBar(BuildContext context, String e) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: (e == 'Success') ? Colors.white : Colors.black,
+      backgroundColor: (e == 'Success') ? Colors.black : Colors.white,
       shape: const BeveledRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(8),
@@ -12,7 +12,7 @@ void showSnackBar(BuildContext context, String e) {
       ),
       content: Text(
         e,
-        style: TextStyle(color: (e == 'Success') ? Colors.black : Colors.white),
+        style: TextStyle(color: (e == 'Success') ? Colors.white : Colors.black),
       ),
     ),
   );

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class CustomGestureDetector extends StatelessWidget {
+class CustomInkWell extends StatelessWidget {
   final String text;
-  const CustomGestureDetector({
+  const CustomInkWell({
     required this.onTap,
     required this.text,
     super.key,
   });
   final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_chat_app/constants.dart';
 import 'package:scholar_chat_app/pages/chat.dart';
-import 'package:scholar_chat_app/widgets/custom_gesture.dart';
+import 'package:scholar_chat_app/widgets/custom_Ink_well.dart';
 import 'package:scholar_chat_app/widgets/custom_text_field.dart';
 import 'package:scholar_chat_app/widgets/show_snow_bar.dart';
 
@@ -90,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                CustomGestureDetector(
+                CustomInkWell(
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
                         try {

@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatefulWidget {
+class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     required this.onChanged,
     required this.hint,
     this.obsecure = false,
+    this.autovalidateMode,
     super.key,
   });
   final bool obsecure;
   final Function(String) onChanged;
   final String hint;
 
-  @override
-  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
-}
+  final AutovalidateMode? autovalidateMode;
 
-class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -27,8 +24,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         }
         return null;
       },
-      obscureText: widget.obsecure,
-      onChanged: widget.onChanged,
+      obscureText: obsecure,
+      onChanged: onChanged,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         focusedErrorBorder: const OutlineInputBorder(
@@ -41,7 +38,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             color: Colors.red,
           ),
         ),
-        hintText: widget.hint,
+        hintText: hint,
         hintStyle: const TextStyle(
             color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 20),
         enabledBorder: const OutlineInputBorder(

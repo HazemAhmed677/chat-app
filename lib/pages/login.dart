@@ -4,7 +4,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_chat_app/constants.dart';
 import 'package:scholar_chat_app/pages/chat.dart';
 import 'package:scholar_chat_app/pages/register.dart';
-import 'package:scholar_chat_app/widgets/custom_gesture.dart';
+import 'package:scholar_chat_app/widgets/custom_Ink_well.dart';
 import 'package:scholar_chat_app/widgets/custom_text_field.dart';
 import 'package:scholar_chat_app/widgets/show_snow_bar.dart';
 
@@ -19,11 +19,12 @@ class LoginPage extends StatefulWidget {
 class _RegisterPageState extends State<LoginPage> {
   String email = "";
   String password = "";
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool isLoading = false;
-
+  AutovalidateMode autovalidateMode1 = AutovalidateMode.disabled;
+  AutovalidateMode autovalidateMode2 = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -33,7 +34,6 @@ class _RegisterPageState extends State<LoginPage> {
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: Form(
-            autovalidateMode: autovalidateMode,
             key: formKey,
             child: SingleChildScrollView(
               child: Column(
@@ -78,14 +78,15 @@ class _RegisterPageState extends State<LoginPage> {
                   CustomTextFormField(
                     onChanged: (data) {
                       if (data.isEmpty) {
-                        autovalidateMode = AutovalidateMode.disabled;
+                        autovalidateMode1 = AutovalidateMode.disabled;
                         setState(() {});
                       } else {
-                        autovalidateMode = AutovalidateMode.always;
+                        autovalidateMode1 = AutovalidateMode.always;
                         setState(() {});
                       }
                       email = data;
                     },
+                    autovalidateMode: autovalidateMode1,
                     hint: 'Email',
                   ),
                   const SizedBox(
@@ -93,24 +94,33 @@ class _RegisterPageState extends State<LoginPage> {
                   ),
                   CustomTextFormField(
                     onChanged: (data) {
+                      if (data.isEmpty) {
+                        autovalidateMode2 = AutovalidateMode.disabled;
+                        setState(() {});
+                      } else {
+                        autovalidateMode2 = AutovalidateMode.always;
+                        setState(() {});
+                      }
                       password = data;
                     },
+                    autovalidateMode: autovalidateMode2,
                     hint: 'Password',
                     obsecure: true,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  CustomGestureDetector(
+                  CustomInkWell(
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
                           try {
                             setState(() {
                               isLoading = true;
                             });
-                            await userLogin();
                             Navigator.pushNamed(context, ChatPage.id,
                                 arguments: email);
+                            await userLogin();
+                            formKey.currentState!.reset();
                           } on FirebaseAuthException catch (e) {
                             if (e.toString().contains('weak-password')) {
                               showSnackBar(context, 'weak password');
@@ -126,9 +136,11 @@ class _RegisterPageState extends State<LoginPage> {
                           } catch (e) {
                             showSnackBar(context, e.toString());
                           }
-                          setState(() {
-                            isLoading = false;
-                          });
+                          setState(
+                            () {
+                              isLoading = false;
+                            },
+                          );
                         }
                       },
                       text: 'Login'),
