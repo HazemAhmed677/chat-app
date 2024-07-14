@@ -117,9 +117,9 @@ class _RegisterPageState extends State<LoginPage> {
                             setState(() {
                               isLoading = true;
                             });
+                            await userLogin();
                             Navigator.pushNamed(context, ChatPage.id,
                                 arguments: email);
-                            await userLogin();
                             formKey.currentState!.reset();
                           } on FirebaseAuthException catch (e) {
                             if (e.toString().contains('weak-password')) {

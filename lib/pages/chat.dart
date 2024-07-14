@@ -119,9 +119,9 @@ class _ChatPageState extends State<ChatPage> {
         });
   }
 
-  void addToCollectionAndAnimate(String data, String email) {
+  void addToCollectionAndAnimate(String data, String email) async {
     if (data != '') {
-      messeges.add(
+      await messeges.add(
         {
           'id': email,
           kMessage: data,
@@ -129,11 +129,13 @@ class _ChatPageState extends State<ChatPage> {
         },
       );
       controller.clear();
-      _controller.animateTo(_controller.position.minScrollExtent,
-          duration: const Duration(
-            milliseconds: 300,
-          ),
-          curve: Curves.easeIn);
+      _controller.animateTo(
+        _controller.position.minScrollExtent,
+        duration: const Duration(
+          milliseconds: 300,
+        ),
+        curve: Curves.easeIn,
+      );
     }
   }
 }
