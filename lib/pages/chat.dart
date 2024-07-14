@@ -129,13 +129,17 @@ class _ChatPageState extends State<ChatPage> {
         },
       );
       controller.clear();
-      _controller.animateTo(
-        _controller.position.minScrollExtent,
-        duration: const Duration(
-          milliseconds: 300,
-        ),
-        curve: Curves.easeIn,
-      );
+      try {
+        _controller.animateTo(
+          _controller.position.minScrollExtent,
+          duration: const Duration(
+            milliseconds: 300,
+          ),
+          curve: Curves.easeIn,
+        );
+      } catch (e) {
+        //
+      }
     }
   }
 }
