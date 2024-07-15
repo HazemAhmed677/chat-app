@@ -26,6 +26,7 @@ class ChatsCubit extends Cubit<ChatsState> {
   void fetchMesseges() {
     messeges.orderBy(kCreatedAt, descending: true).snapshots().listen(
       (event) {
+        messgesList.clear();
         for (var doc in event.docs) {
           messgesList.add(MessegeModel.fromJSon(doc));
         }

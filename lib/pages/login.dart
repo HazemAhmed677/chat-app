@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:scholar_chat_app/blocs/auth/auth_bloc.dart';
 import 'package:scholar_chat_app/constants.dart';
 import 'package:scholar_chat_app/cubits/chats/chats_cubit.dart';
-import 'package:scholar_chat_app/cubits/login/login_cubit.dart';
+
 import 'package:scholar_chat_app/pages/chat.dart';
 import 'package:scholar_chat_app/pages/register.dart';
 import 'package:scholar_chat_app/widgets/custom_Ink_well.dart';
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           isLoading = true;
@@ -142,8 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                       CustomInkWell(
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              await BlocProvider.of<LoginCubit>(context)
-                                  .userLogin(email: email, password: password);
+                              BlocProvider.of<AuthBloc>(context).add(
+                                  LoginEvent(email: email, password: password));
                               isAbsorbig = false;
                             }
                           },

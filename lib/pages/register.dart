@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:scholar_chat_app/blocs/auth/auth_bloc.dart';
 import 'package:scholar_chat_app/constants.dart';
 import 'package:scholar_chat_app/cubits/chats/chats_cubit.dart';
-import 'package:scholar_chat_app/cubits/register/register_cubit.dart';
 import 'package:scholar_chat_app/pages/chat.dart';
 import 'package:scholar_chat_app/widgets/custom_Ink_well.dart';
 import 'package:scholar_chat_app/widgets/custom_text_field.dart';
@@ -28,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
   AutovalidateMode autovalidateMode2 = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is RegisterLoading) {
           isLoading = true;
@@ -129,9 +129,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       CustomInkWell(
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              await BlocProvider.of<RegisterCubit>(context)
-                                  .userRegister(
-                                      email: email, password: password);
+                              BlocProvider.of<AuthBloc>(context).add(
+                                  RegisterEvent(
+                                      email: email, password: password));
                             }
                           },
                           text: 'Register'),
