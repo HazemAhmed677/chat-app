@@ -86,14 +86,20 @@ class _ChatPageState extends State<ChatPage> {
                 if (data != '') {
                   BlocProvider.of<ChatsCubit>(context)
                       .addMessege(email: email, content: data);
-                  await animateToMaxPosition();
+                  animateToMaxPosition();
                 }
               },
               decoration: InputDecoration(
                 label: const Text('Messege'),
                 hintText: 'Enter Messege',
                 suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (input != '') {
+                        BlocProvider.of<ChatsCubit>(context)
+                            .addMessege(email: email, content: input);
+                        animateToMaxPosition();
+                      }
+                    },
                     icon: const Icon(
                       Icons.send,
                       color: Color.fromARGB(255, 20, 79, 127),
