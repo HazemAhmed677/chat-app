@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scholar_chat_app/constants.dart';
+import 'package:scholar_chat_app/cubits/chats/chats_cubit.dart';
 import 'package:scholar_chat_app/cubits/login/login_cubit.dart';
 import 'package:scholar_chat_app/pages/chat.dart';
 import 'package:scholar_chat_app/pages/register.dart';
@@ -41,6 +42,9 @@ class _LoginPageState extends State<LoginPage> {
           isLoading = true;
         } else if (state is LoginSuccess) {
           isLoading = false;
+          // it's streaming
+          // achieved by .listen
+          BlocProvider.of<ChatsCubit>(context).fetchMesseges();
           Navigator.pushNamed(context, ChatPage.id, arguments: email);
           formKey.currentState!.reset();
         } else if (state is LoginFaliure) {

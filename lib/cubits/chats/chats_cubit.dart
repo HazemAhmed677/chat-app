@@ -1,17 +1,19 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meta/meta.dart';
 import 'package:scholar_chat_app/constants.dart';
+import 'package:scholar_chat_app/models/messege_model.dart';
 
 part 'chats_state.dart';
 
 class ChatsCubit extends Cubit<ChatsState> {
-  List messgesList = [];
+  CollectionReference messeges =
+      FirebaseFirestore.instance.collection(kMessegesCollection);
+
+  List<MessegeModel> messgesList = [];
   ChatsCubit() : super(ChatsInitial());
-  addMessege(
-      {required CollectionReference messeges,
-      required String email,
-      required String content}) async {
+  Future<void> addMessege(
+      {required String email, required String content}) async {
     await messeges.add(
       {
         'id': email,
@@ -21,9 +23,18 @@ class ChatsCubit extends Cubit<ChatsState> {
     );
   }
 
-  fetchMesseges({required CollectionReference messeges}) async {
-    messeges.orderBy(kCreatedAt, descending: true).snapshots().listen((event) {
-      emit(ChatSuccess());
-    });
+  void fetchMesseges() {
+    messeges.orderBy(kCreatedAt, descending: true).snapshots().listen(
+      (event) {
+        messgesList.clear();
+        print('1111');
+        for (var doc in event.docs) {
+          print('2222');
+          messgesList.add(MessegeModel.fromJSon(doc));
+        }
+        print('3333');
+        emit(ChatSuccess(messgesList));
+      },
+    );
   }
 }

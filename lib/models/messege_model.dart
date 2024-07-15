@@ -4,6 +4,7 @@ class MessegeModel {
   DateTime createdAt;
   MessegeModel(this.email, this.createdAt, this.messege);
   factory MessegeModel.fromJSon(json) {
-    return MessegeModel(json['email'], json['created at'], json['messege']);
+    return MessegeModel(
+        json['id'], json['created at'].toDate(), json['messege']);
   }
 }
