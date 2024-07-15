@@ -9,8 +9,10 @@ import 'package:scholar_chat_app/pages/chat.dart';
 import 'package:scholar_chat_app/pages/login.dart';
 import 'package:scholar_chat_app/pages/register.dart';
 import 'package:flutter/material.dart';
+import 'package:scholar_chat_app/simple_bloc_observer.dart';
 
 void main() async {
+  Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
