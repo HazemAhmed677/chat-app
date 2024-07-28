@@ -1,16 +1,19 @@
-# scholar_chat_app
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<h1>Chat App</h1>
+<hr><p>A real-time, public chat application enabling users to connect and interact with a global community.</p><h2>Technologies Used</h2>
+<hr><ul>
+<li>Flutter</li>
+</ul><ul>
+<li>Firebase (Authentication, Realtime Database)</li>
+</ul><ul>
+<li>Bloc/Cubit</li>
+</ul><h2>Features</h2>
+<hr><ul>
+<li>User authentication and registration using Firebase Auth.</li>
+</ul><ul>
+<li>Real-time public chat room with message streaming.</li>
+</ul><ul>
+<li>Robust state management using Bloc/Cubit for efficient data handling.</li>
+</ul><ul>
+<li>User-friendly interface for seamless interaction.</li>
+</ul><h2>Project Status</h2>
+<hr><p>Completed</p>
